@@ -1,1 +1,1 @@
-# Canopy-Openness-Index-Analysis-with-R
+# Canopy Openness Index Analysis with R
