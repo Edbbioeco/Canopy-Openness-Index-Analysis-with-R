@@ -1,45 +1,5 @@
----
-title: "Canopy Openess Index in R"
-author: "Edson Silva-Júnior"
-format: 
-  html:
-    embed-resources: true
-    toc: true
-    toc-depth: 5
-    toc-expand: 1
-    toc-location: left
-    toc-title: Tópicos
-    number-sections: false
-    df-print: paged
-    smooth-scroll: true
-execute: 
-  cache: false 
-editor: visual
-theme: 
-  light: flatly
-  dark: darkly
----
+# Packages ----
 
-```{=html}
-<style>
-body {
-text-align: justify;
-font-size: 20px}
-blockquote {
-  background-color: #FAEFA6;
-  padding: 10px;
-  font-size: 14.5px
-}
-</style>
-```
-
-# Canopy Openess Index in R
-
-In ecology reasearchs about forest species, such leaf litter animais, plants and fungi, one usefull environmental process is the 
-
-# **Packages**
-
-```{r}
 library(terra)
 
 library(tidyverse)
@@ -47,21 +7,17 @@ library(tidyverse)
 library(tidyterra)
 
 library(hemispheR)
-```
 
-# **Data**
+# Data ----
 
-## Importing  
+## Importing ----  
 
-```{r}
 images <- paste0("cropped-images/imagem", 1:4, ".png")
 
 images
-```
 
-## Visualizing
+## Visualizing ----
 
-```{r, warning=FALSE}
 visualizing_canopy <- function(x){
   
   raster_bi <- terra::rast(x)
@@ -77,13 +33,11 @@ visualizing_canopy <- function(x){
 }
 
 purrr::walk(images, visualizing_canopy)
-```
 
-# **Calculating Canopy Openess**
+# Calculating Canopy Openess ----
 
-## Visualizing
+## Visualizing ----
 
-```{r}
 canopy_visualizing <- function(x){ 
   
   analy <- stringr::str_glue("analysis for {x}") 
@@ -91,7 +45,7 @@ canopy_visualizing <- function(x){
   file <- x  |>
     hemispheR::import_fisheye()  |>
     hemispheR::binarize_fisheye()
-
+  
   ggplt <- ggplot() +
     tidyterra::geom_spatraster(data = file) +
     scale_fill_viridis_c(na.value = "transparent", breaks = seq(0, 1, 1)) +
@@ -105,11 +59,9 @@ canopy_visualizing <- function(x){
 }
 
 purrr::walk(images, canopy_visualizing)
-```
 
-## Calculating
+## Calculating ----
 
-```{r}
 canopy_Openess <- function(x){
   
   stringr::str_glue("analysis for {x}") |> message()
@@ -129,4 +81,3 @@ canopy_Openess <- function(x){
 }
 
 purrr::walk(images, canopy_Openess)
-```
