@@ -178,7 +178,7 @@ purrr::walk(images, visualizing_canopy)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-3-1.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-3-1.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -186,7 +186,7 @@ purrr::walk(images, visualizing_canopy)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-3-2.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-3-2.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -194,7 +194,7 @@ purrr::walk(images, visualizing_canopy)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-3-3.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-3-3.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -202,7 +202,7 @@ purrr::walk(images, visualizing_canopy)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-3-4.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-3-4.png)
 :::
 :::::::::::
 
@@ -252,7 +252,7 @@ purrr::walk(images, canopy_visualizing)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-4-1.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-4-1.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -261,7 +261,7 @@ purrr::walk(images, canopy_visualizing)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-4-2.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-4-2.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -270,7 +270,7 @@ purrr::walk(images, canopy_visualizing)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-4-3.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-4-3.png)
 :::
 
 ::: {.cell-output .cell-output-stderr}
@@ -279,7 +279,7 @@ purrr::walk(images, canopy_visualizing)
 :::
 
 ::: cell-output-display
-![](README_files/figure-markdown/unnamed-chunk-4-4.png)
+![](Canopy-Openness-Index-in-R_files/figure-markdown/unnamed-chunk-4-4.png)
 :::
 ::::::::::::
 

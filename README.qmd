@@ -2,7 +2,7 @@
 title: "Canopy Openess Index in R"
 author: "Edson Silva-Júnior"
 format: 
-  html:
+  markdown:
     embed-resources: true
     toc: true
     toc-depth: 5
