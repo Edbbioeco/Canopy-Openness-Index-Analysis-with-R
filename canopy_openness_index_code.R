@@ -19,7 +19,9 @@ images
 
 ## Visualizing ----
 
-visualizing_canopy <- function(x){
+visualizing_canopy <- function(x){ 
+  
+  x <- paste0("cropped-images/", x)
   
   raster_bi <- terra::rast(x)
   
@@ -40,6 +42,8 @@ purrr::walk(images, visualizing_canopy)
 ## Visualizing ----
 
 canopy_visualizing <- function(x){ 
+  
+  x <- paste0("cropped-images/", x) 
   
   analy <- stringr::str_glue("analysis for {x}") 
   
@@ -63,7 +67,9 @@ purrr::walk(images, canopy_visualizing)
 
 ## Calculating ----
 
-canopy_Openess <- function(x){
+canopy_Openess <- function(x){ 
+  
+  x <- paste0("cropped-images/", x)
   
   stringr::str_glue("analysis for {x}") |> message()
   

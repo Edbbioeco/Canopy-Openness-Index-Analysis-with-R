@@ -1,21 +1,23 @@
-canopy_Openess <- function(x){
+canopy_visualizing <- function(x){ 
   
-  require(c("tidyverse", "hemispheR"))
+  x <- paste0("cropped-images/", x)
   
-  stringr::str_glue("analysis for {x}") |> message()
+  analy <- stringr::str_glue("analysis for {x}") 
   
-  raster <- x |>
-    hemispheR::import_fisheye() |>
+  file <- x  |>
+    hemispheR::import_fisheye()  |>
     hemispheR::binarize_fisheye()
   
-  values_0 <- raster[raster > 0] |> 
-    terra::ncell()
+  ggplt <- ggplot() +
+    tidyterra::geom_spatraster(data = file) +
+    scale_fill_viridis_c(na.value = "transparent", breaks = seq(0, 1, 1)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(title = analy) +
+    theme_bw()
   
-  values_all <- raster |> 
-    terra::ncell()
-  
-  result <- values_0 / values_all
-  
-  print(result)
+  print(ggplt)
   
 }
+
+purrr::walk(images, canopy_visualizing)
