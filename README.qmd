@@ -12,6 +12,12 @@ format:
     number-sections: false
     df-print: paged
     smooth-scroll: true
+  gfm: 
+    fig-format: png
+    embed-resources: true
+    toc: false
+    number-sections: false
+    keep-yaml: false
 execute: 
   cache: false 
 editor: visual
