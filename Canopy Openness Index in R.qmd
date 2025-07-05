@@ -37,23 +37,23 @@ blockquote {
 
 In ecology reasearchs about forest species, such leaf litter animals, plants and fungi, one useful environmental process is the canopy openness, which is the how much the tree canopy is open. This affects several ecological process, due the solar radiation rates achieving that ecosystems. For that, ecology researchers use fish eye lens to photograph the forest canopy, to better analyse those processes. Canopy may be measure by an index, where:
 
-* 0: a canopy fully close;
+-   0: a canopy fully close;
 
-* 1: there is not canopy.
+-   1: there is not canopy.
 
-Several image analysis softwares can generate canopy openness index analysis, such as ImageJ. Although, for many images, programming languages can automatize process, accelerating the research's progress. In R, it is possible to analyse a set of canopy images and getting its canopy openness indexes. 
+Several image analysis softwares can generate canopy openness index analysis, such as ImageJ. Although, for many images, programming languages can automatize process, accelerating the research's progress. In R, it is possible to analyse a set of canopy images and getting its canopy openness indexes.
 
 # Packages
 
 For those analysis, we gonna use the packages:
 
-* terra: importing images as `spatRast` objets and get its propieties;
+-   terra: importing images as `spatRast` objets and get its propieties;
 
-* tidyverse: to assistant plots and loop processes;
+-   tidyverse: to assistant plots and loop processes;
 
-* tidyterra: to better plot the `spatRast` objets;
+-   tidyterra: to better plot the `spatRast` objets;
 
-* hemispheR: to binarize canopy imagens, for canopy openness indexes analysis.
+-   hemispheR: to binarize canopy imagens, for canopy openness indexes analysis.
 
 Remind to confer whether the packages where previously installed to library them.
 
@@ -69,7 +69,7 @@ library(hemispheR)
 
 # Data
 
-## Importing  
+## Importing
 
 Our files are images taken by fish eye lens. Those images are archived on `cropped-images` folder. Initialy, using `list.files()` function, we get imagens path link.
 
@@ -82,7 +82,7 @@ images
 
 ## Visualizing
 
-The next step is the importing and visualizing the images. 
+The next step is the importing and visualizing the images.
 
 To importing, we use `terra::rast()` function, loading images as `spatRast` objects. Then, we use `ggplot2` and `tidyterra` functions to plot. Moreover, we construct a loop for the every imagens, constructing a function and loading it with `purrr` package.
 
@@ -166,4 +166,4 @@ canopy_Openess <- function(x){
 purrr::walk(images, canopy_Openess)
 ```
 
-Notice the images with more open sky presented higher canopy openness index values. 
+Notice the images with more open sky presented higher canopy openness index values.
