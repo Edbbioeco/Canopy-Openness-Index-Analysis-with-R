@@ -12,7 +12,8 @@ library(hemispheR)
 
 ## Importing ----  
 
-images <- paste0("cropped-images/imagem", 1:4, ".png")
+images <- list.files(path = "cropped-images", 
+                     pattern = ".png")
 
 images
 
@@ -70,9 +71,11 @@ canopy_Openess <- function(x){
     hemispheR::import_fisheye() |>
     hemispheR::binarize_fisheye()
   
-  values_0 <- raster[raster > 0] |> terra::ncell()
+  values_0 <- raster[raster > 0] |> 
+    terra::ncell()
   
-  values_all <- raster |> terra::ncell()
+  values_all <- raster |> 
+    terra::ncell()
   
   result <- values_0 / values_all
   
