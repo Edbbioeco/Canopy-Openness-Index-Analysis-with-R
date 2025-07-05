@@ -1,10 +1,9 @@
 # Pacotes ----
 
-library(pandoc)
+library(rmarkdown)
 
 # Conververtendo HTML em MD ----
 
-pandoc::pandoc_convert(file = "README.html",
-                       to = "gfm",
-                       output = "README.md",
-                       args = "--extract-media=.")
+render("README.html", 
+       output_format = "github_document", 
+       output_file = "README.md")
