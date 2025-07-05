@@ -1,9 +1,10 @@
 # Pacotes ----
 
-library(rmarkdown)
+library(pandoc)
 
 # Conververtendo HTML em MD ----
 
-rmarkdown::pandoc_convert(input = "Canopy Openness Index in R.html",
-                          to = "markdown", 
-                          output = "README.md")
+pandoc::pandoc_convert(file = "README.html",
+                       to = "gfm",
+                       output = "README.md",
+                       args = "--extract-media=.")
