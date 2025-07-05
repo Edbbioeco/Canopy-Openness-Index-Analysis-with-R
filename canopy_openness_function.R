@@ -20,4 +20,4 @@ canopy_visualizing <- function(x){
   
 }
 
-purrr::walk(images, canopy_visualizing)
+purrr::walk(images, canopy_visualizing) 

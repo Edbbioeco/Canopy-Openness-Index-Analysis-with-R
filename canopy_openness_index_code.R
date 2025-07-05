@@ -87,6 +87,6 @@ canopy_Openess <- function(x){
   
   print(result)
   
-}
+} 
 
 purrr::walk(images, canopy_Openess)

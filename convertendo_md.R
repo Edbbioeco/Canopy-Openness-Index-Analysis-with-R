@@ -1,9 +1,10 @@
 # Pacotes ----
 
-library(rmarkdown)
+library(rvest)
 
 # Conververtendo HTML em MD ----
 
-rmarkdown::pandoc_convert(input = "Canopy Openness Index in R.html",
-                          to = "markdown", 
-                          output = "README.md")
+rvest::read_html("Canopy Openness Index in R.html") |> 
+  rvest::html_element("body") |> 
+  rvest::html_text2() |> 
+  writeLines("README.md")
