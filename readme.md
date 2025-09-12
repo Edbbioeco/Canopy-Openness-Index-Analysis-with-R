@@ -24,6 +24,10 @@ summary(cars)
 
 You can also embed plots, for example:
 
+``` r
+plot(pressure)
+```
+
 ![](readme_files/figure-markdown_github/pressure-1.png)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
