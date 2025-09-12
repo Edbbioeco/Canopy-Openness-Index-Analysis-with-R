@@ -1,3 +1,7 @@
+teste
+================
+2025-09-12
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax
@@ -28,7 +32,7 @@ You can also embed plots, for example:
 plot(pressure)
 ```
 
-![](readme_files/figure-markdown_github/pressure-1.png)
+![](readme_files/figure-gfm/pressure-1.png)<!-- -->
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
 prevent printing of the R code that generated the plot.
