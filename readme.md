@@ -1,7 +1,3 @@
-teste
-================
-2025-09-12
-
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax
