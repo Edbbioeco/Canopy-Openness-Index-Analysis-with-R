@@ -8,6 +8,8 @@ date: "`r Sys.Date()`"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Analysing Canopy Openness Index Analysis with R
+
 # Required Packages
 
 ```{r}

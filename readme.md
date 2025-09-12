@@ -1,3 +1,5 @@
+# Analysing Canopy Openness Index Analysis with R
+
 # Required Packages
 
 ``` r
@@ -49,25 +51,25 @@ purrr::walk(images, visualizing_canopy)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-16-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-16-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-3-3.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-16-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-3-4.png)<!-- -->
 
 # Calculating Canopy Openess index
 
@@ -105,22 +107,22 @@ purrr::walk(images, canopy_visualizing)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-17-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-17-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-4-3.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-17-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-4-4.png)<!-- -->
 
 ## Calculating opennes Index for each images through a looping
 
