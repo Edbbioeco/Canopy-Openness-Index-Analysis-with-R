@@ -1,34 +1,178 @@
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+# Required Packages
 
 ``` r
-summary(cars)
+library(terra)
+
+library(tidyverse)
+
+library(tidyterra)
+
+library(hemispheR)
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+# Data
 
-## Including Plots
-
-You can also embed plots, for example:
+## Images path
 
 ``` r
-plot(pressure)
+images <- list.files(path = "cropped-images", 
+                     pattern = ".png")
+
+images
 ```
 
-![](readme_files/figure-gfm/pressure-1.png)<!-- -->
+    ## [1] "imagem1.png" "imagem2.png" "imagem3.png" "imagem4.png"
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+## Visualizing cannopy images through a looping
+
+``` r
+visualizing_canopy <- function(x){ 
+  
+  x <- paste0("cropped-images/", x)
+  
+  raster_bi <- terra::rast(x)
+  
+  ggplots <- ggplot() +
+    tidyterra::geom_spatraster_rgb(data = raster_bi) +
+    scale_fill_continuous(na.value = "transparent") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) 
+  
+  print(ggplots)
+  
+}
+
+purrr::walk(images, visualizing_canopy)
+```
+
+    ## Warning: [rast] unknown extent
+
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+    ## Warning: [rast] unknown extent
+
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-16-2.png)<!-- -->
+
+    ## Warning: [rast] unknown extent
+
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-16-3.png)<!-- -->
+
+    ## Warning: [rast] unknown extent
+
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-16-4.png)<!-- -->
+
+# Calculating Canopy Openess index
+
+## Visualizing each binarized images through a looping
+
+``` r
+canopy_visualizing <- function(x){ 
+  
+  path_file <- paste0("cropped-images/", x) 
+  
+  image_name <- stringr::str_remove(x, ".png")
+  
+  analy <- stringr::str_glue("Binnarized image for {image_name}") 
+  
+  file <- path_file  |>
+    hemispheR::import_fisheye()  |>
+    hemispheR::binarize_fisheye()
+  
+  ggplt <- ggplot() +
+    tidyterra::geom_spatraster(data = file) +
+    scale_fill_viridis_c(na.value = "transparent", breaks = seq(0, 1, 1)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(title = analy) +
+    theme_bw()
+  
+  print(ggplt)
+  
+}
+
+purrr::walk(images, canopy_visualizing)
+```
+
+    ## It is a circular fisheye, where xc, yc and radius are 1485.5, 1485.5, 1483.5
+
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-17-2.png)<!-- -->
+
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-17-3.png)<!-- -->
+
+    ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
+    ## <SpatRaster> resampled to 501264 cells.
+
+![](readme_files/figure-gfm/unnamed-chunk-17-4.png)<!-- -->
+
+## Calculating opennes Index for each images through a looping
+
+``` r
+canopy_Openess <- function(x){ 
+  
+  path_file <- paste0("cropped-images/", x)
+  
+  image_name <- stringr::str_remove(x, ".png")
+  
+  stringr::str_glue("Cannopy Opennes Index for {image_name}:") |> 
+    crayon::green() |> 
+    message()
+  
+  raster <- path_file |>
+    hemispheR::import_fisheye() |>
+    hemispheR::binarize_fisheye()
+  
+  values_0 <- raster[raster > 0] |> 
+    terra::ncell()
+  
+  values_all <- raster |> 
+    terra::ncell()
+  
+  result <- values_0 / values_all
+  
+  print(result)
+  
+} 
+
+purrr::walk(images, canopy_Openess)
+```
+
+    ## Cannopy Opennes Index for imagem1:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1485.5, 1485.5, 1483.5
+
+    ## [1] 0.49774
+
+    ## Cannopy Opennes Index for imagem2:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+
+    ## [1] 0.5004268
+
+    ## Cannopy Opennes Index for imagem3:
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+
+    ## [1] 0.2591377
+
+    ## Cannopy Opennes Index for imagem4:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
+
+    ## [1] 0.1944832
