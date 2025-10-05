@@ -2,7 +2,7 @@
 
 Canopy openness index (COI) is often used as predictor variable in
 ecological reseaches. COI can be calculated for the ratio between the
-image pixels count understanded as the skt and the imagel total pixels
+image pixels count understanded as the sky and the imagel total pixels
 count, ranging from 0 (a full closed canopy) to 1 (a full open canopy).
 Usely, it’s used fisheye images.
 
@@ -231,3 +231,4 @@ purrr::walk(images, canopy_Openess)
     ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
 
     ## [1] 0.1944832
+
