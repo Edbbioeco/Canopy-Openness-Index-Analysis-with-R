@@ -1,6 +1,35 @@
 # Analysing Canopy Openness Index Analysis with R
 
+Canopy openness index (COI) is often used as predictor variable in
+ecological reseaches. COI can be calculated for the ratio between the
+image pixels count understanded as the skt and the imagel total pixels
+count, ranging from 0 (a full closed canopy) to 1 (a full open canopy).
+Usely, it’s used fisheye images.
+
+``` math
+
+COI = \frac{N-Pixels_{sky}}{N-Pixels_{total}}
+```
+
+initialy, canopy images are binarized, to posteriorly pixels be counted.
+In R, we can calculate COI easily by simples image analyses.
+
 # Required Packages
+
+For our analysis, we use the required packages:
+
+- [terra](https://github.com/rspatial/terra): for import images as
+  rasters to calculate raster pixels count;
+
+- [tidyverse](https://www.tidyverse.org/packages): for transform data,
+  generate visualizations by ggplot graphs and make loops, throught
+  [purrr package](https://purrr.tidyverse.org);
+
+- [tidyterra](https://dieghernan.github.io/tidyterra): for visualizing
+  rasters;
+
+- [hemispheR](https://canopyphotography.wordpress.com/2022/04/05/hemispher-an-r-package-for-fisheye-canopy-image-analysis):
+  to recorte fisheye images and binarize them;
 
 ``` r
 library(terra)
@@ -14,7 +43,12 @@ library(hemispheR)
 
 # Data
 
+Our data are images, taken by a fisheye lens.
+
 ## Images path
+
+Firs, we informate images files path, as `list.files()` function,
+informing its directory path (`path`) and its file class (`pattern`).
 
 ``` r
 images <- list.files(path = "cropped-images", 
@@ -26,6 +60,12 @@ images
     ## [1] "imagem1.png" "imagem2.png" "imagem3.png" "imagem4.png"
 
 ## Visualizing cannopy images through a looping
+
+First to analysis, we have our files path, we build a
+[loop](https://stackoverflow.com/questions/74794193/how-to-use-the-purrr-package-in-r-instead-of-for-loop-to-iterate-over-indices)
+to visualize our images, making a function and run it on
+`purrr::walk()`, informating our image paths and maked function. That
+step is only to visualizing our images.
 
 ``` r
 visualizing_canopy <- function(x){ 
@@ -51,27 +91,35 @@ purrr::walk(images, visualizing_canopy)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-3-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-12-3.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-3-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-12-4.png)<!-- -->
 
 # Calculating Canopy Openess index
+
+Our next step is to calculate Canopy Openess index (COI). Initialy, we
+import the images, throught `hemispheR::import_fisheye()` function, and
+binarize images, throught `hemispheR::binarize_fisheye()`. [hemispheR
+package](https://canopyphotography.wordpress.com/2022/04/05/hemispher-an-r-package-for-fisheye-canopy-image-analysis)
+binarize images for the images light incidence index. For now, lets see
+binarized images. To facilite our work, lets make a loop, as previously
+made.
 
 ## Visualizing each binarized images through a looping
 
@@ -107,24 +155,29 @@ purrr::walk(images, canopy_visualizing)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-4-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-4-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
 
 ## Calculating opennes Index for each images through a looping
+
+Finaly, we calculate COI. To count sky pixels and image total pixels, we
+use `terra::ncell()` function. TO only sky pixel, we filter image
+raster, as `raster[raster > 0]`. The results are values, ranging from 0
+to 1.
 
 ``` r
 canopy_Openess <- function(x){ 
