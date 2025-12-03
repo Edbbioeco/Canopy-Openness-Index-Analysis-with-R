@@ -69,8 +69,8 @@ visualizing_canopy <- function(x){
   ggplots <- ggplot() +
     tidyterra::geom_spatraster_rgb(data = raster_bi) +
     scale_fill_continuous(na.value = "transparent") +
-    scale_x_continuous(expand = c(0, 0)) +
-    scale_y_continuous(expand = c(0, 0)) 
+    scale_x_continuous(expand = FALSE) +
+    scale_y_continuous(expand = FALSE) 
   
   print(ggplots)
   
@@ -145,5 +145,58 @@ canopy_Openess <- function(x){
 } 
 
 purrr::walk(images, canopy_Openess)
+```
+
+# Tidying values into a drataframe
+
+Now, lets tidy our results, and input them into a dataframe. First, we built a null vector object, `results <- c()`. Next, we build a function to calculate COI, but hyperdeclaring a objetct `results`, usind `<<-` (please, do not confuse `<<-` to `<-`, and `results` to `result`), making this object a global environment object.
+
+```{r}
+results <- c()
+
+canopy_Openess_df <- function(x){ 
+  
+  path_file <- paste0("cropped-images/", x)
+  
+  image_name <- stringr::str_remove(x, ".png")
+  
+  stringr::str_glue("Cannopy Opennes Index for {image_name}:") |> 
+    crayon::green() |> 
+    message()
+  
+  raster <- path_file |>
+    hemispheR::import_fisheye() |>
+    hemispheR::binarize_fisheye()
+  
+  values_0 <- raster[raster > 0] |> 
+    terra::ncell()
+  
+  values_all <- raster |> 
+    terra::ncell()
+  
+  result <- values_0 / values_all
+  
+  results <<- c(results, result)
+  
+} 
+
+purrr::walk(images, canopy_Openess_df)
+
+results
+```
+
+Now, finally, we build a dataframe.
+
+```{r}
+df_coi <- data.frame(images = images |> stringr::str_remove(".png"),
+                     COI = results)
+df_coi
+```
+
+We can export it also, using `writexl` package.
+
+```{r, eval=FALSE}
+df_coi |> 
+  writexl::write_xlsx("results_coi.xlsx")
 ```
 

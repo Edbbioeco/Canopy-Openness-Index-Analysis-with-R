@@ -2,7 +2,7 @@
 
 Canopy openness index (COI) is often used as predictor variable in
 ecological reseaches. COI can be calculated for the ratio between the
-image pixels count understanded as the sky and the imagel total pixels
+image pixels count understanded as the skt and the imagel total pixels
 count, ranging from 0 (a full closed canopy) to 1 (a full open canopy).
 Usely, it’s used fisheye images.
 
@@ -77,8 +77,8 @@ visualizing_canopy <- function(x){
   ggplots <- ggplot() +
     tidyterra::geom_spatraster_rgb(data = raster_bi) +
     scale_fill_continuous(na.value = "transparent") +
-    scale_x_continuous(expand = c(0, 0)) +
-    scale_y_continuous(expand = c(0, 0)) 
+    scale_x_continuous(expand = FALSE) +
+    scale_y_continuous(expand = FALSE) 
   
   print(ggplots)
   
@@ -91,25 +91,25 @@ purrr::walk(images, visualizing_canopy)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-12-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
     ## Warning: [rast] unknown extent
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-12-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
 
 # Calculating Canopy Openess index
 
@@ -155,22 +155,22 @@ purrr::walk(images, canopy_visualizing)
 
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-14-2.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-14-3.png)<!-- -->
 
     ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
     ## <SpatRaster> resampled to 501264 cells.
 
-![](readme_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
+![](readme_files/figure-gfm/unnamed-chunk-14-4.png)<!-- -->
 
 ## Calculating opennes Index for each images through a looping
 
@@ -213,18 +213,18 @@ purrr::walk(images, canopy_Openess)
 
     ## It is a circular fisheye, where xc, yc and radius are 1485.5, 1485.5, 1483.5
 
-    ## [1] 0.49774
+    ## [1] 0.4971959
 
     ## Cannopy Opennes Index for imagem2:
 
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
 
-    ## [1] 0.5004268
+    ## [1] 0.4991239
 
     ## Cannopy Opennes Index for imagem3:
     ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
 
-    ## [1] 0.2591377
+    ## [1] 0.2578474
 
     ## Cannopy Opennes Index for imagem4:
 
@@ -232,3 +232,85 @@ purrr::walk(images, canopy_Openess)
 
     ## [1] 0.1944832
 
+# Tidying values into a drataframe
+
+Now, lets tidy our results, and input them into a dataframe. First, we
+built a null vector object, `results <- c()`. Next, we build a function
+to calculate COI, but hyperdeclaring a objetct `results`, usind `<<-`
+(please, do not confuse `<<-` to `<-`, and `results` to `result`),
+making this object a global environment object.
+
+``` r
+results <- c()
+
+canopy_Openess_df <- function(x){ 
+  
+  path_file <- paste0("cropped-images/", x)
+  
+  image_name <- stringr::str_remove(x, ".png")
+  
+  stringr::str_glue("Cannopy Opennes Index for {image_name}:") |> 
+    crayon::green() |> 
+    message()
+  
+  raster <- path_file |>
+    hemispheR::import_fisheye() |>
+    hemispheR::binarize_fisheye()
+  
+  values_0 <- raster[raster > 0] |> 
+    terra::ncell()
+  
+  values_all <- raster |> 
+    terra::ncell()
+  
+  result <- values_0 / values_all
+  
+  results <<- c(results, result)
+  
+} 
+
+purrr::walk(images, canopy_Openess_df)
+```
+
+    ## Cannopy Opennes Index for imagem1:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1485.5, 1485.5, 1483.5
+
+    ## Cannopy Opennes Index for imagem2:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+
+    ## Cannopy Opennes Index for imagem3:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1499.5, 1499.5, 1497.5
+
+    ## Cannopy Opennes Index for imagem4:
+
+    ## It is a circular fisheye, where xc, yc and radius are 1500, 1500, 1498
+
+``` r
+results
+```
+
+    ## [1] 0.4971959 0.4991239 0.2578474 0.1944832
+
+Now, finally, we build a dataframe.
+
+``` r
+df_coi <- data.frame(images = images |> stringr::str_remove(".png"),
+                     COI = results)
+df_coi
+```
+
+    ##    images       COI
+    ## 1 imagem1 0.4971959
+    ## 2 imagem2 0.4991239
+    ## 3 imagem3 0.2578474
+    ## 4 imagem4 0.1944832
+
+We can export it also, using `writexl` package.
+
+``` r
+df_coi |> 
+  writexl::write_xlsx("results_coi.xlsx")
+```
