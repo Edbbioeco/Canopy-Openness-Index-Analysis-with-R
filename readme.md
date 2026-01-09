@@ -1,4 +1,4 @@
-# ⚠️WARNING: PLEASE READ THIS BEFORE TO PROCEDE⚠️
+# ⚠️❌CRITICAL WARNING: PLEASE READ THIS WARNING BELLOW BEFORE TO PROCEDE❌⚠️
 
 > This analysis, although useful, became obsolete. To check a easily way to procede for analyse canaopy openness index, check my package [coiR](https://github.com/Edbbioeco/coiR), which compiles a better way to do that analysis.
 
@@ -318,4 +318,5 @@ We can export it also, using `writexl` package.
 df_coi |> 
   writexl::write_xlsx("results_coi.xlsx")
 ```
+
 
